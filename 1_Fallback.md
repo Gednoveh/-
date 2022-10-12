@@ -55,4 +55,5 @@
 分析
 --
 
-  首先关注<code>contribute()</code>函数
+  首先关注<code>contribute()</code>函数，调用该方法可以单次支付小于0.001ETH，当sender的累计值大于当前owner的contributions值时，sender会成为owner
+  查看当前合约的构造函数，当前owner的contributions值为<coed>1000 * (1 ether)</code>,所以我们需要调用<code>contribute()</code>最少10^6次才能成为owner，显然合理
