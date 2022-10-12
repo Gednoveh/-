@@ -55,5 +55,8 @@
 分析
 --
 
-  首先关注<code>contribute()</code>函数，调用该方法可以单次支付小于0.001ETH，当sender的累计值大于当前owner的contributions值时，sender会成为owner
-  查看当前合约的构造函数，当前owner的contributions值为<coed>1000 * (1 ether)</code>,所以我们需要调用<code>contribute()</code>最少10^6次才能成为owner，显然合理
+  首先关注<code>contribute()</code>方法，调用该方法可以单次支付小于0.001ETH，当sender的累计值大于当前owner的contributions值时，sender会成为owner  
+  查看当前合约的构造函数，当前owner的contributions值为<code>1000 * (1 ether)</code>,所以我们需要调用<code>contribute()</code>最少<code>10^6</code>次才能成为owner，显然不合理  
+  继续向下查看<code>receive()</code>方法，当sender发送任意值的ETH，且contributions不为0是，sender会成为owner  
+  在Solidity中，一个合约最多有一个<code>receive()</code>回调函数，在对合约转账时（例如通过<code>transfer()</code>、<code>send()</code>或<code>call()</code>）会触发receive()回调  
+  在成为owner后调用<code>withdraw()</code>方法可清空合约余额  
