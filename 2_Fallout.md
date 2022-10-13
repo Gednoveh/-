@@ -53,12 +53,17 @@
     }  
 分析
 --
+
 查看Fallout函数发现只要发起一笔转账就可成为owner  
 仔细查看，发现函数名为Fal1out  
+  
 ![image](https://user-images.githubusercontent.com/35074461/195491345-86bf325e-ddad-4c12-9906-42947ee0706d.png)  
+
 交互
 --
-<code>await contract.Fal1out({value:1})</code>向合约发起一笔转账  
-
+使用<code>await contract.Fal1out({value:1})</code>向合约发起一笔转账  
+  
+![image](https://user-images.githubusercontent.com/35074461/195491851-45426f58-a906-4346-b086-68f392d9a6b4.png)  
+发现owner已变更成功，完成
 
     
