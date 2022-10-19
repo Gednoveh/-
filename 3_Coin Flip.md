@@ -46,10 +46,15 @@
 分析
 --
 本关要求我们预测对10次硬币的正反  
+
 查看<code>flip</code>方法可知，<code>coinFlip</code>的值决定硬币正反，<code>coinFlip</code>的值通过<code>blockValue.div(FACTOR)</code>计算得到  
+
 <code>blockValue</code>的值为进行预测时当前区块的<code>blockhash</code>  
+
 因为<code>FACTOR</code>的值为常量，所以如果能提前预知<code>blockValue</code>的值，就能预测硬币的正反  
+
 因为有<code>if (lastHash == blockValue)</code>的判断，同一个区块的合约只能提交一次。所以我们采用合约调用的方法，先在我们编写的合约内计算硬币的正反，再调用本关合约，提交预测的结果  
+
 编写攻击合约代码  
     // SPDX-License-Identifier: MIT
     pragma solidity ^0.6.0;
@@ -92,8 +97,17 @@
         }
 
     }
+部署本关合约，并查看合约地址  
 
-查看预测结果，攻击成功  
+![图片](https://user-images.githubusercontent.com/35074461/196595386-591c69c0-b59c-459e-b930-5688b0808c10.png)  
+  
+编译攻击合约，设置Remix部署环境为Injected Provider，连接Metamask。设置部署地址为0x1474ADE39c052Ffb14aA38726c63Fd8972FFb044  
+  
+![图片](https://user-images.githubusercontent.com/35074461/196595791-c42836e4-471b-402c-8b22-9ac9d129a8be.png)  
+
+点击attack进行合约攻击，查看预测结果，发现攻击成功  
+  
 ![图片](https://user-images.githubusercontent.com/35074461/196593086-7c9df5e9-68d1-4506-bbf0-8f0bca4cb16b.png)  
 继续提交直至成功10次，完成本关  
+  
 ![图片](https://user-images.githubusercontent.com/35074461/196594859-f4bf89a1-d10e-4ddb-a385-5b65c870b061.png)  
