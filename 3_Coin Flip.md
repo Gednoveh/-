@@ -111,3 +111,8 @@
 继续提交直至成功10次，完成本关  
   
 ![图片](https://user-images.githubusercontent.com/35074461/196594859-f4bf89a1-d10e-4ddb-a385-5b65c870b061.png)  
+
+
+Ps:
+--
+<code>blockhash(block.number.sub(1)</code>是一种常见的伪随机数生成漏洞，更多关于智能合约随机数漏洞，可查看[《智能合约中的随机数漏洞》](https://github.com/Gednoveh/SmartContractSecurity/blob/main/%E9%9A%8F%E6%9C%BA%E6%95%B0%E9%A2%84%E6%B5%8B)
