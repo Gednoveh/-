@@ -1,4 +1,4 @@
-# SmartContractSecurity
+# Ethernaut
 
 https://ethernaut.openzeppelin.com/
 
