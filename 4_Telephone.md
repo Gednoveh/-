@@ -32,11 +32,17 @@
 
 查看<code>changeOwner</code>方法，当调用该方法时<code>tx.origin</code>的值不等于<code>msg.sender</code>，就能成功修改owner  
 
-<code>tx.origin</code>是Solidity的一个全局变量，它遍历整个调用栈并返回最初发送调用（或事务）的帐户的地址，他与<code>msg.sender</code>的区别为：  
-<code>tx.origin</code>等于初始调用合约或交易的地址
-<code>msg.sender</code>等于当前调用合约或交易的地址  
+<code>tx.origin</code>是Solidity的一个全局变量，它遍历整个调用栈并返回最初发送调用（或事务）的帐户的地址，他与<code>msg.sender</code>的区别为： 
 
-直接在本关合约中使用<code>changeOwner</code>方法修改owner值时，code>tx.origin</code>的值等于<code>msg.sender</code>，所以无法修改成功，需要在其他合约中调用该合约的
+<code>tx.origin</code>等于调用合约或交易的账户地址  
+
+<code>msg.sender</code>等于当前调用合约或交易的账户地址或合约地址  
+
+![图片](https://user-images.githubusercontent.com/35074461/196837744-4690a9ac-a821-40d6-aeff-a49f5499bf02.png)  
+
+直接在本关合约中使用<code>changeOwner</code>方法修改owner值时，code>tx.origin</code>的值等于<code>msg.sender</code>，所以无法修改成功。  
+
+而在其他合约中调用本关合约的<code>changeOwner</code>方法时，<code>tx.origin</code>的值等于钱包地址，<code>msg.sender</code>的地址等于攻击合约的地址，可以修改成功。
 
 攻击
 --
@@ -72,6 +78,6 @@
 
 ![图片](https://user-images.githubusercontent.com/35074461/196651259-27a1270d-6b24-40b4-b264-aa27d60524fb.png)
 
-攻击成功后查看owner，成功修改为当前player    
+攻击成功后查看owner，成功修改为当前钱包地址    
 ![图片](https://user-images.githubusercontent.com/35074461/196834235-7c5ec2df-5fe4-4637-af77-f54f92bbbca5.png)
 
