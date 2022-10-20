@@ -36,6 +36,7 @@
 <code>tx.origin</code>等于初始调用合约或交易的地址
 <code>msg.sender</code>等于当前调用合约或交易的地址  
 
+直接在本关合约中使用<code>changeOwner</code>方法修改owner值时，code>tx.origin</code>的值等于<code>msg.sender</code>，所以无法修改成功，需要在其他合约中调用该合约的
 
 攻击
 --
@@ -65,5 +66,12 @@
 
 查看当前owner和player的值  
 
+![图片](https://user-images.githubusercontent.com/35074461/196650031-757958ef-be04-45c8-a326-5c04eaae0913.png)
 
-使用攻击合约中的attack方法修改owner  
+使用攻击合约中的attack方法修改owner,尝试将owner值修改为player地址，也就是当前Metamask的钱包地址  
+
+![图片](https://user-images.githubusercontent.com/35074461/196651259-27a1270d-6b24-40b4-b264-aa27d60524fb.png)
+
+攻击成功后查看owner，成功修改为当前player    
+![图片](https://user-images.githubusercontent.com/35074461/196834235-7c5ec2df-5fe4-4637-af77-f54f92bbbca5.png)
+
