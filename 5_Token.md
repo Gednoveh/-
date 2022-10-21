@@ -45,4 +45,25 @@ You are given 20 tokens to start with and you will beat the level if you somehow
 攻击
 --
 
-查询当前账户余额，为20个token
+查询当前账户余额，为20个token  
+
+![image](https://user-images.githubusercontent.com/35074461/197104266-8e5ee32e-eaaf-460e-8895-34b45f6a540b.png)
+
+对合约地址转账21个token，此时发生下溢出，再次查看账户余额，发现获得大量Token  
+
+![image](https://user-images.githubusercontent.com/35074461/197120041-236908a9-3c2b-490e-a6b9-44e2690cbc46.png)  
+
+PS:
+--
+
+Overflows are very common in solidity and must be checked for with control statements such as:  
+
+    if(a + c > a) {
+      a = a + c;
+    }
+
+An easier alternative is to use OpenZeppelin's SafeMath library that automatically checks for overflows in all the mathematical operators. The resulting code looks like this:  
+
+    a = a.add(c);
+
+If there is an overflow, the code will revert.  
